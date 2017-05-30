@@ -1,0 +1,23 @@
+{
+  "name": "devievi",
+  "version": "1.0.69",
+  "description": "Devin's Everything is good. ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/espidev/DeviEvi.git"
+  },
+  "keywords": [
+    "nsfw",
+    "music"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/espidev/DeviEvi/issues"
+  },
+  "homepage": "https://github.com/espidev/DeviEvi#readme"
+}
