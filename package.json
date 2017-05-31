@@ -19,5 +19,9 @@
   "bugs": {
     "url": "https://github.com/espidev/DeviEvi/issues"
   },
-  "homepage": "https://github.com/espidev/DeviEvi#readme"
+  "homepage": "https://github.com/espidev/DeviEvi#readme",
+  "dependencies": {
+    "soundcloud": "^3.1.2",
+    "youtube-api": "^2.0.8"
+  }
 }
