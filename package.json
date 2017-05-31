@@ -2,7 +2,7 @@
   "name": "devievi",
   "version": "1.0.69",
   "description": "Devin's Everything is good. ",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -23,5 +23,8 @@
   "dependencies": {
     "soundcloud": "^3.1.2",
     "youtube-api": "^2.0.8"
+  },
+  "devDependencies": {
+    "typings": "^2.1.1"
   }
 }
