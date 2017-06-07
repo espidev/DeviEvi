@@ -4,7 +4,8 @@
   "description": "Devin's Everything is good. ",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node main.js"
   },
   "repository": {
     "type": "git",
@@ -21,6 +22,8 @@
   },
   "homepage": "https://github.com/espidev/DeviEvi#readme",
   "dependencies": {
+    "express": "^4.15.3",
+    "expressjs": "^1.0.1",
     "soundcloud": "^3.1.2",
     "youtube-api": "^2.0.8"
   },
