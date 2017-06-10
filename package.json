@@ -24,6 +24,8 @@
   "dependencies": {
     "express": "^4.15.3",
     "expressjs": "^1.0.1",
+    "musicmetadata": "^2.0.5",
+    "socket.io": "^2.0.2",
     "soundcloud": "^3.1.2",
     "youtube-api": "^2.0.8"
   },
