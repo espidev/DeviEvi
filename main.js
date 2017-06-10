@@ -17,9 +17,21 @@ app.listen(80, function () {
     console.log('Listening on port 80!')
 });
 
+function createList(){
+
+}
 function addMusic(){
 
 }
 function removeMusic(){
+
+}
+function playMusic(){
+
+}
+function pauseMusic(){
+
+}
+function stopMusic(){
 
 }
