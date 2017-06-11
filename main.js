@@ -1,9 +1,9 @@
 const express = require('express');
 const app = express();
 var server = require('http').createServer(app);
-var io = require('socket.io')(server);
+var io = require('socket.io').listen(server);
 
-var muzik = [{"position":"1", "file":__dirname + "data/EspiDev - Serene.flac"}];
+var muzik = [{"position":"1", "file":__dirname + "/data/EspiDev - Serene.flac"}];
 var sockets = [];
 
 var fs = require('fs');
@@ -12,40 +12,53 @@ if(!fs.existsSync(__dirname + "/data")){
 }
 
 app.use(express.static('views'));
-app.use(function(req, res, next){
-    console.log('[ERROR] Client error 404');
-    res.sendFile(__dirname + "/views/404.html");
-});
+/*app.use(function(req, res, next){
+ console.log('[ERROR] Client error 404');
+ res.sendFile(__dirname + "/views/404.html");
+ });*/
 app.get('/', function (req, res) {
     res.sendFile(path.join(_dirname + "views/index.html"));
 });
 app.get('/admin', function (req, res) {
     res.sendFile(path.join(_dirname + "views/admin.html"));
 });
-
 io.on('connection', function(socket){
     console.log('[INFO] New Socket.io client connection.');
-    socket.emit('data', createList());
+    createList(socket);
     sockets[socket.id] = socket;
 });
 io.on('disconnect', function(socket){
     delete sockets[socket.id];
 });
 
-app.listen(80, function () {
+server.listen(80, function () {
     console.log('Listening on port 80!')
 });
 
-function createList(){
-    var str = "";
-    muzik.forEach(function(data){
-        var mm = require('musicmetadata');
-        var parser = mm(fs.createReadStream(data.file), function (err, metadata) {
-            if (err) throw err;
-            str += data.position + ":" + metadata.artist + ":" + metadata.album + ":" + metadata.albumartist + ":" + metadata.title + ":" + metadata.genre + ":" + metadata.picture + ":" + metadata.duration + " ";
-        });
-    });
-    return str;
+function createList(socket){
+    let str = "";
+    var i = 0;
+    function fudge(data){
+        if(i == muzik.length-1){
+            var mm = require('musicmetadata');
+            var parser = mm(fs.createReadStream(data.file), function (err, metadata) {
+                if (err) throw err;
+                str += data.position + "Հ" + metadata + "§";
+                console.log(str);
+                socket.emit('data', str);
+            });
+        }
+        else{
+            console.log(data);
+            var mm = require('musicmetadata');
+            var parser = mm(fs.createReadStream(data.file), function (err, metadata) {
+                if (err) throw err;
+                str += data.position + "Հ" + metadata + "§";
+                fudge(muzik[++i]);
+            });
+        }
+    }
+    fudge(muzik[0]);
 }
 function addMusic(){
 
