@@ -3,14 +3,47 @@ const app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
 
-var muzik = [{"position":"1", "file":__dirname + "/data/EspiDev - Serene.flac"}];
+var muzik = [];
 var sockets = [];
 
 var fs = require('fs');
 if(!fs.existsSync(__dirname + "/data")){
     fs.mkdir(__dirname + "/data");
 }
+if(!fs.existsSync(__dirname + "/bind.json")){
+    fs.writeFileSync(__dirname + "/bind.json", '[{"'+ __dirname + '/data/EspiDev - Serene.flac":"1"}]');
+}
+var fs = require('fs');
+var json = JSON.parse(fs.readFileSync(__dirname + "/bind.json", 'utf8'));
+fs.readdir(__dirname + '/data', (err, files) => {
+    for(var i = 0; i < files.length; i++){
+        var file = files[i];
+        console.log(file + " " + json[file] + " " + json);
+        muzik.push({"position": json[file], "file": "data/" + file});
+    }
+});
 
+for(var i = 0; i < muzik.length; i++){
+    var mm = require('musicmetadata');
+    var parser = mm(fs.createReadStream(muzik[i].file), function (err, metadata) {
+        if (err) throw err;
+        fs.writeFileSync(__dirname + "/images/" + i + "." + metadata.picture[0].format, new Buffer(metadata.picture[0].data));
+        var easyimg = require('easyimage');
+        var height = 0, width = 0;
+        easyimg.info(__dirname + "/images/" + i + "." + metadata.picture[0].format).then(function (file){
+            height = file.height;
+            width = file.width;
+            console.log(__dirname + "/images/" + i + "." + metadata.picture[0].format)
+            easyimg.crop({
+                src:__dirname + "/images/" + i + "." + metadata.picture[0].format,
+                dst:__dirname + "/images/" + i + "." + metadata.picture[0].format,
+                cropwidth:height,
+                x:0, y:0
+            });
+        });
+    });
+}
+app.use("/images", express.static(__dirname + '/images'));
 app.use(express.static('views'));
 /*app.use(function(req, res, next){
  console.log('[ERROR] Client error 404');
@@ -36,16 +69,17 @@ server.listen(80, function () {
 });
 
 function createList(socket){
-    let str = "";
     var i = 0;
+    socket.emit('datastart');
     function fudge(data){
         if(i == muzik.length-1){
             var mm = require('musicmetadata');
             var parser = mm(fs.createReadStream(data.file), function (err, metadata) {
                 if (err) throw err;
-                str += data.position + "Հ" + metadata + "§";
-                console.log(str);
-                socket.emit('data', str);
+                socket.emit('cur', data.position);
+                socket.emit('data', metadata);
+                socket.emit('pic', metadata.picture[0].data);
+                socket.emit('done');
             });
         }
         else{
@@ -53,7 +87,9 @@ function createList(socket){
             var mm = require('musicmetadata');
             var parser = mm(fs.createReadStream(data.file), function (err, metadata) {
                 if (err) throw err;
-                str += data.position + "Հ" + metadata + "§";
+                socket.emit('cur', data.position);
+                socket.emit('data', metadata);
+                socket.emit('pic', metadata.picture.data);
                 fudge(muzik[++i]);
             });
         }
@@ -64,6 +100,9 @@ function addMusic(){
 
 }
 function removeMusic(){
+
+}
+function moveSong(prev, cur){
 
 }
 function playMusic(){

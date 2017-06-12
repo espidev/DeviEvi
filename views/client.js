@@ -1,35 +1,43 @@
 var socket = io();
-socket.on('data', function(data) {
-    load(data);
-});
+var metadata = [];
+var collection = false;
+var colcache = 0;
 
-function load(data){
-    console.log(data);
+socket.on('datastart', function(data) {
+    document.getElementById("container").innerHTML = "Refreshing list...";
+    meta = new Array(data);
+    collection = true;
+});
+socket.on('cur', function(data){
+    colcache = data;
+});
+socket.on('data', function(data){
+   metadata[colcache] = data;
+});
+socket.on('done', function(data){
     document.getElementById("container").innerHTML = "<div class=\"col s12 m7\">";
-    var sp = data.split("§");
-    for(var i = 1; i <= sp.length;){
-        for(var j = 0; j <= sp.length; j++){
-            var st = sp[j].split("Հ");
-            if(st[0] == i){
-                i++;
-                document.getElementById("container").innerHTML += `
+    var c = 1;
+    console.log(metadata);
+    metadata.forEach(function(data){
+        var duration = data.duration;
+        duration = Math.round(duration/60) + ":" + Math.round(duration%60);
+        document.getElementById("container").innerHTML += `
                 <div class="waves-effect card horizontal cyan">
                     <div class="card-image">
-                    <img height="140" width="140" src="` + st[1].picture + `">
+                    <img src="/images/` + c + `.` + data.picture[0].format + `" height="140" width="140">
                     </div>
                     <div class="card-stacked">
                         <div style="color:white;" class="card-content">
-                            <div class="title"><b>` + st[1].title + `</b></div>
-                            <p>` + st[1].artist.join(", ") + `</p>
-                            <p>` + st[1].duration + `</p>
-                            <p>` + st[1].album + `</p>
+                            <div class="title"><b>` + data.title + `</b></div>
+                            <p>` + data.artist.join(", ") + `</p>
+                            <p>` + duration + `</p>
+                            <p>` + data.album + `</p>
                         </div>
                     </div>
-                    <a class="white-text btn btn-floating pulse orange">1</a>
+                    <a class="white-text btn btn-floating pulse orange">` + c + `</a>
                 </div>
                 `;
-            }
-        }
-    }
+        c++;
+    });
     document.getElementById("container").innerHTML += "</div>"
-}
+});
