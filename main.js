@@ -11,15 +11,16 @@ if(!fs.existsSync(__dirname + "/data")){
     fs.mkdir(__dirname + "/data");
 }
 if(!fs.existsSync(__dirname + "/bind.json")){
-    fs.writeFileSync(__dirname + "/bind.json", '[{"'+ __dirname + '/data/EspiDev - Serene.flac":"1"}]');
+    fs.writeFileSync(__dirname + "/bind.json", '[{"' + __dirname.repla + '/data/EspiDev - Serene.flac":"1"}]');
 }
 var fs = require('fs');
 var json = JSON.parse(fs.readFileSync(__dirname + "/bind.json", 'utf8'));
 fs.readdir(__dirname + '/data', (err, files) => {
     for(var i = 0; i < files.length; i++){
         var file = files[i];
-        console.log(file + " " + json[file] + " " + json);
-        muzik.push({"position": json[file], "file": "data/" + file});
+        console.log(__dirname + "/data/" + file + " " + json[__dirname + "/" + file]);
+        console.log(json[0]);
+        muzik.push({"position": json[0][__dirname + "/" + file], "file": "data/" + file});
     }
 });
 
