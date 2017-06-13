@@ -12,6 +12,7 @@ var MemoryStore = express.session.MemoryStore,
 var muzik = [];
 var sockets = [];
 var users = [];
+var admins = [];
 
 /*
  * Init fs.
@@ -32,6 +33,10 @@ if(!fs.existsSync(__dirname + "/users/admin.json")){
 if(!fs.existsSync(__dirname + "/bind.json")){
     fs.writeFileSync(__dirname + "/bind.json", '[{"' + __dirname.replace("\\", "/") + '/data/EspiDev - Serene.flac":"1"}]');
 }
+if(!fs.existsSync(__dirname + "/admin.json")){
+    fs.writeFileSync(__dirname + "/admin.json", '[{"name":"admin"}]')
+}
+admins = JSON.parse(fs.readFileSync(__dirname.replace("\\", "/") + "/admin.json", 'utf8'));
 var fs = require('fs');
 var json = JSON.parse(fs.readFileSync(__dirname.replace("\\", "/") + "/bind.json", 'utf8'));
 
@@ -50,8 +55,8 @@ fs.readdir(__dirname + '/users', (err, files) => {
 });
 
 /*
-* Scan for music files.
-*/
+ * Scan for music files.
+ */
 
 console.log("Scanning music database...");
 
@@ -97,17 +102,36 @@ app.use("/images", express.static(__dirname + '/images'));
 app.use(express.static('views'));
 app.use(session);
 app.configure(function () {
-   app.use(express.cookieParser());
-   app.use(express.session({store: sessionStore, secret: 'secretkey', key: 'express.sid'}));
-   app.use(function(req, res){
-      res.end('Your session id is ' + req.sessionID);
-   });
+    app.use(express.cookieParser());
+    app.use(express.session({store: sessionStore, secret: 'secretkey', key: 'express.sid'}));
+    app.use(function(req, res){
+        res.end('Your session id is ' + req.sessionID);
+    });
 });
 app.get('/', function (req, res) {
     res.sendFile(path.join(_dirname + "views/index.html"));
 });
 app.get('/admin', function (req, res) {
-    res.sendFile(path.join(_dirname + "views/admin.html"));
+    if(validateSession(req.sessionID) != null){
+        if(isAdmin(validateSession(req.sessionID))){
+            res.sendFile(path.join(__dirname + "views/admin.html"));
+        }
+        else{
+            res.send("You are not an admin!");
+        }
+    }
+    else{
+        res.sendFile(path.join(__dirname + "views/login.html"));
+    }
+});
+app.get('logout', function (req, res) {
+    var b = logoutUser(req.sessionID);
+    if(b){
+        res.send("Logged out.");
+    }
+    else {
+        res.send("You aren't logged in!");
+    }
 });
 io.on('connection', function(socket){
     console.log('New socket.io connection from ' + socket.id);
@@ -117,13 +141,12 @@ io.on('connection', function(socket){
 io.on('disconnect', function(socket){
     delete sockets[socket.id];
 });
-io.use(sharedsession(session));
 io.set('authorization', function(data, accept) {
-   if(data.headers.cookie) {
-       data.cookie = parseCookie(data.headers.cookie);
-       data.sessionID = data.cookie['express.sid'];
-       data.sessionStore = sessionStore;
-       sessionStore.get(data.sessionID, function(err, session) {
+    if(data.headers.cookie) {
+        data.cookie = parseCookie(data.headers.cookie);
+        data.sessionID = data.cookie['express.sid'];
+        data.sessionStore = sessionStore;
+        sessionStore.get(data.sessionID, function(err, session) {
             if(err || !session){
                 accept('Error', false);
             }
@@ -131,12 +154,12 @@ io.set('authorization', function(data, accept) {
                 data.session = new Session(data, session);
                 accept(null, true);
             }
-       });
-   }
-   else {
-       return accept('No cookie transmitted.', false);
-   }
-   accept(null, true);
+        });
+    }
+    else {
+        return accept('No cookie transmitted.', false);
+    }
+    accept(null, true);
 });
 server.listen(80, function () {
     console.log('Listening on port 80!')
@@ -184,33 +207,34 @@ function validateSession(sessionKey){
 }
 function loginUser(usern, pass, sessionID){
     users.forEach(function(user){
-       if(user.name == usern){
-           if(user.pass == pass){
-               user.sessionID = sessionID;
-               return "Success";
-           }
-           else{
-               return "PassFail";
-           }
-       }
-    });
-    return 'NoSuchUser';
-}
-function logoutUser(usern, sessionID){
-    users.forEach(function(user){
         if(user.name == usern){
-            if(user.sessionID == sessionID){
-                user.sessionID = null;
-                return 'Success';
+            if(user.pass == pass){
+                user.sessionID = sessionID;
+                return "Success";
             }
             else{
-                return "SessionIDFail";
+                return "PassFail";
             }
         }
     });
     return 'NoSuchUser';
 }
-
+function logoutUser(sessionID){
+    users.forEach(function(user){
+        if(user.sessionID == sessionID){
+            user.sessionID = null;
+            return true;
+        }
+    });
+    return false;
+}
+function isAdmin(usern, sessionID){
+    admins.forEach(function(user){
+        if(user.name == usern)
+            return true;
+    });
+    return false;
+}
 /*
  * Music Utility functions.
  */
