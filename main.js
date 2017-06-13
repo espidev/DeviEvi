@@ -1,28 +1,68 @@
 const express = require('express');
+const expressSession = require('express-session');
+const cookieParser = require('cookie-parser');
+const sharedsession = require('express-socket.io-session');
 const app = express();
+var session = require("express-session")({
+   secret: "test-secret",
+    userid: "na"
+});
 var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
 
 var muzik = [];
 var sockets = [];
+var sessionCookies = [];
+
+/*
+ * Init fs.
+ */
 
 var fs = require('fs');
 if(!fs.existsSync(__dirname + "/data")){
     fs.mkdir(__dirname + "/data");
 }
+if(!fs.existsSync(__dirname + "/users")){
+    fs.mkdir(__dirname + "/users");
+}
+if(!fs.existsSync(__dirname + "/users/admin.json")){
+    fs.writeFileSync(__dirname + "/users/admin.json", '[{"password":"pass123"}]')
+}
 if(!fs.existsSync(__dirname + "/bind.json")){
-    fs.writeFileSync(__dirname + "/bind.json", '[{"' + __dirname.repla + '/data/EspiDev - Serene.flac":"1"}]');
+    fs.writeFileSync(__dirname + "/bind.json", '[{"' + __dirname.replace("\\", "/") + '/data/EspiDev - Serene.flac":"1"}]');
 }
 var fs = require('fs');
-var json = JSON.parse(fs.readFileSync(__dirname + "/bind.json", 'utf8'));
-fs.readdir(__dirname + '/data', (err, files) => {
+var json = JSON.parse(fs.readFileSync(__dirname.replace("\\", "/") + "/bind.json", 'utf8'));
+
+/*
+ * Scan for user information.
+ */
+
+fs.readdir(__dirname + '/users', (err, files) => {
     for(var i = 0; i < files.length; i++){
         var file = files[i];
-        console.log(__dirname + "/data/" + file + " " + json[__dirname + "/" + file]);
-        console.log(json[0]);
-        muzik.push({"position": json[0][__dirname + "/" + file], "file": "data/" + file});
+        console.log(__dirname.replace("\\", "/") + "/data/" + file + " " + json[0][__dirname.replace("\\", "/") + "/data/" + file]);
+        console.log(json[0]); //COMMENTS DEBUG
+        muzik.push({"position": json[0][__dirname.replace("\\", "/") + "/data/" + file], "file": "data/" + file});
     }
 });
+
+/*
+* Scan for music files.
+*/
+
+fs.readdir(__dirname.replace("\\", "/") + '/data', (err, files) => {
+    for(var i = 0; i < files.length; i++){
+        var file = files[i];
+        console.log(__dirname.replace("\\", "/") + "/data/" + file + " " + json[0][__dirname.replace("\\", "/") + "/data/" + file]);
+        console.log(json[0]); //COMMENTS DEBUG
+        muzik.push({"position": json[0][__dirname.replace("\\", "/") + "/data/" + file], "file": "data/" + file});
+    }
+});
+
+/*
+ * Create picture cache for music.
+ */
 
 for(var i = 0; i < muzik.length; i++){
     var mm = require('musicmetadata');
@@ -34,7 +74,7 @@ for(var i = 0; i < muzik.length; i++){
         easyimg.info(__dirname + "/images/" + i + "." + metadata.picture[0].format).then(function (file){
             height = file.height;
             width = file.width;
-            console.log(__dirname + "/images/" + i + "." + metadata.picture[0].format)
+            console.log(__dirname + "/images/" + i + "." + metadata.picture[0].format);
             easyimg.crop({
                 src:__dirname + "/images/" + i + "." + metadata.picture[0].format,
                 dst:__dirname + "/images/" + i + "." + metadata.picture[0].format,
@@ -46,10 +86,7 @@ for(var i = 0; i < muzik.length; i++){
 }
 app.use("/images", express.static(__dirname + '/images'));
 app.use(express.static('views'));
-/*app.use(function(req, res, next){
- console.log('[ERROR] Client error 404');
- res.sendFile(__dirname + "/views/404.html");
- });*/
+app.use(session);
 app.get('/', function (req, res) {
     res.sendFile(path.join(_dirname + "views/index.html"));
 });
@@ -64,7 +101,7 @@ io.on('connection', function(socket){
 io.on('disconnect', function(socket){
     delete sockets[socket.id];
 });
-
+io.use(sharedsession(session));
 server.listen(80, function () {
     console.log('Listening on port 80!')
 });
@@ -97,6 +134,11 @@ function createList(socket){
     }
     fudge(muzik[0]);
 }
+
+/*
+ * Utility functions.
+ */
+
 function addMusic(){
 
 }
