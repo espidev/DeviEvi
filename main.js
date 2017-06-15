@@ -1,18 +1,17 @@
 const express = require('express');
 const expressSession = require('express-session');
-const cookieParser = require('cookie-parser');
 const app = express();
-var parseCookie = require('connect').utils.parseCookie;
-var server = require('http').createServer(app);
-var io = require('socket.io').listen(server);
-var Session = require('connect').middleware.session.Session;
-var MemoryStore = express.session.MemoryStore,
-    sessionStore = new MemoryStore();
+var server = require('http').createServer(app),
+    io = require('socket.io').listen(server),
+    session = expressSession({
+        secret: "secret",
+        sessionID: "none"
+    });
 
-var muzik = [];
-var sockets = [];
-var users = [];
-var admins = [];
+var muzik = [],
+    sockets = [],
+    users = [],
+    admins = [];
 
 /*
  * Init fs.
@@ -124,7 +123,7 @@ app.get('/admin', function (req, res) {
         res.sendFile(path.join(__dirname + "views/login.html"));
     }
 });
-app.get('logout', function (req, res) {
+app.get('/logout', function (req, res) {
     var b = logoutUser(req.sessionID);
     if(b){
         res.send("Logged out.");
@@ -134,6 +133,33 @@ app.get('logout', function (req, res) {
     }
 });
 io.on('connection', function(socket){
+
+    var sessionid = socket.handshake.sessionID;
+    var user = validateSession(sessionid);
+
+    /*
+     * Socket.io user stuff
+     */
+
+    socket.on('isLoggedIn', function(){
+        if(user == null){
+            socket.emit('no');
+        }
+        else{
+            socket.emit('yes ' + v);
+        }
+    });
+    socket.on('attemptLogin', function(data){
+        var name = data.name, pass = data.pass;
+        var login = loginUser(name, pass, sessionid);
+        socket.emit(login.toLowerCase());
+    });
+    /*
+     * Socket.io Playlist Modification
+     */
+    socket.on('songmod add', function(data){
+
+    });
     console.log('New socket.io connection from ' + socket.id);
     createList(socket);
     sockets[socket.id] = socket;
@@ -141,25 +167,8 @@ io.on('connection', function(socket){
 io.on('disconnect', function(socket){
     delete sockets[socket.id];
 });
-io.set('authorization', function(data, accept) {
-    if(data.headers.cookie) {
-        data.cookie = parseCookie(data.headers.cookie);
-        data.sessionID = data.cookie['express.sid'];
-        data.sessionStore = sessionStore;
-        sessionStore.get(data.sessionID, function(err, session) {
-            if(err || !session){
-                accept('Error', false);
-            }
-            else{
-                data.session = new Session(data, session);
-                accept(null, true);
-            }
-        });
-    }
-    else {
-        return accept('No cookie transmitted.', false);
-    }
-    accept(null, true);
+io.use(function(socket, next) {
+    session(socket.request, socket.request.res, next);
 });
 server.listen(80, function () {
     console.log('Listening on port 80!')
@@ -228,7 +237,7 @@ function logoutUser(sessionID){
     });
     return false;
 }
-function isAdmin(usern, sessionID){
+function isAdmin(usern){
     admins.forEach(function(user){
         if(user.name == usern)
             return true;

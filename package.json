@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/espidev/DeviEvi#readme",
   "dependencies": {
+    "connect": "^3.6.2",
     "easyimage": "^2.1.0",
     "express": "^4.15.3",
     "express-session": "^1.15.3",
