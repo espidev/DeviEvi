@@ -3,6 +3,10 @@ var metadata = [];
 var collection = false;
 var colcache = 0;
 
+if(getCookie("sessionID") == ""){
+    document.cookie = "sessionID=" + guid();
+}
+
 socket.on('datastart', function(data) {
     document.getElementById("container").innerHTML = "Refreshing list...";
     meta = new Array(data);
@@ -41,3 +45,44 @@ socket.on('done', function(data){
     });
     document.getElementById("container").innerHTML += "</div>"
 });
+
+function loginSubmit(){
+    var pass = document.getElementById('password').value, user = document.getElementById('username').value;
+    socket.emit('attemptLogin', {name: user, 'pass': pass}, function (data){
+        if(data == 'nosuchuser'){
+            Materialize.toast('No such username!', 4000, 'red');
+        }
+        if(data == 'passfail'){
+            Materialize.toast('Password incorrect!', 4000, 'red');
+        }
+        if(data == 'success'){
+
+        }
+    });
+}
+
+/*
+ * Helper functions.
+ */
+
+function guid() {
+    function s4() {
+        return Math.floor((1 + Math.random()) * 0x10000)
+            .toString(16)
+            .substring(1);
+    }
+    return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+        s4() + '-' + s4() + s4() + s4();
+}
+function getCookie(c_name) {
+    if (document.cookie.length > 0) {
+        c_start = document.cookie.indexOf(c_name + "=");
+        if (c_start != -1) {
+            c_start = c_start + c_name.length + 1;
+            c_end = document.cookie.indexOf(";", c_start);
+            if (c_end == -1) c_end = document.cookie.length;
+            return unescape(document.cookie.substring(c_start, c_end));
+        }
+    }
+    return "";
+}

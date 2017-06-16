@@ -23,6 +23,8 @@
   "homepage": "https://github.com/espidev/DeviEvi#readme",
   "dependencies": {
     "connect": "^3.6.2",
+    "cookie": "^0.3.1",
+    "cookie-session": "^2.0.0-beta.2",
     "easyimage": "^2.1.0",
     "express": "^4.15.3",
     "express-session": "^1.15.3",
@@ -31,6 +33,7 @@
     "musicmetadata": "^2.0.5",
     "node-session": "^1.2.1",
     "socket.io": "^2.0.2",
+    "socket.io.users": "^2.0.2",
     "soundcloud": "^3.1.2",
     "uuid": "^3.0.1",
     "youtube-api": "^2.0.8"

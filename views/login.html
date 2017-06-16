@@ -30,28 +30,11 @@
                     <label for="password" data-error="Incorrect password!">Password</label>
                 </div>
             </div>
-            <a type="submit" name="action" onclick="submit()" class="center-align waves-effect waves-light btn-large">Login</a>
+            <a type="submit" name="action" onclick="loginSubmit()" class="center-align waves-effect waves-light btn-large">Login</a>
         </form>
     </div>
 </div>
 </div>
-<script>
-    var socket = io();
-    function submit(){
-        console.log('submit')
-        var pass = document.getElementById('password').value, user = document.getElementById('username').value;
-        socket.emit('attemptLogin', {name: user, 'pass': pass}, function (data){
-            if(data == 'nosuchuser'){
-                Materialize.toast('No such username!', 4000, 'red');
-            }
-            if(data == 'passfail'){
-                Materialize.toast('Password incorrect!', 4000, 'red');
-            }
-            if(data == 'success'){
-
-            }
-        });
-    }
-</script>
+<script type="text/javascript" src="client.js"></script>
 </body>
 </html>

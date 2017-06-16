@@ -3,13 +3,7 @@ const expressSession = require('express-session');
 const app = express();
 var server = require('http').createServer(app),
     io = require('socket.io').listen(server),
-    session = expressSession({
-        secret: "secret",
-        resave: true,
-        saveUninitialized: true,
-        sessionID: "none"
-    }),
-    sharedsession = require('express-socket.io-session');
+    cookie = require('cookie');
 
 var muzik = [],
     sockets = [],
@@ -102,8 +96,8 @@ console.log("Starting express.js...");
 
 app.use("/images", express.static(__dirname + '/images'));
 app.use(express.static('views'));
-app.use(session);
 app.get('/', function (req, res) {
+    req.session.views = (req.session.views || 0) + 1;
     res.sendFile(path.join(_dirname + "views/index.html"));
 });
 app.get('/admin', function (req, res) {
@@ -135,13 +129,9 @@ app.get('/logout', function (req, res) {
 
 
 io.on('connection', function(socket){
-
-    console.log(socket.handshake.session);
-    var sessionid = socket.handshake.session.userdata;
+    var cookief = cookie.parse(socket.handshake.headers.cookie);
+    var sessionid = cookief.sessionID;
     console.log(sessionid);
-    socket.handshake.session.userdata = 'HEH';
-    socket.handshake.session.save();
-    console.log(socket.handshake.session);
     var user = validateSession(sessionid);
 
     /*
@@ -176,7 +166,6 @@ io.on('connection', function(socket){
 io.on('disconnect', function(socket){
     delete sockets[socket.id];
 });
-io.use(sharedsession(session, {autoSave: true}));
 server.listen(80, function () {
     console.log('Listening on port 80!')
 });
