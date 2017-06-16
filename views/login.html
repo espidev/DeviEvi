@@ -3,31 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="materialize.min.css" media="screen,projection"/>
 </head>
-<body>
+<body style='font-family:Raleway,sans-serif;' background="http://lorempixel.com/1920/1080/abstract">
 <script type="text/javascript" src="jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="materialize.min.js"></script>
 <script src="/socket.io/socket.io.js"></script>
-<div class="card-panel cyan accent-3 z-depth-4">
-    <img src="../favicon.ico" height=80px class="circle center-align">
+<div class="container">
+<div class="row col s6 card-panel accent-3 hoverable z-depth-4 center-align">
+    <img src="favicon.ico" height=80px class="circle center-align">
     <div class="row">
-        <form class="col s12">
+        <form id="login-form" class="col s12">
             <div class="row">
                 <div class="input-field col s12">
                     <i class="material-icons prefix">account_circle</i>
-                    <input id="username" type="text" class="validate">
+                    <input id="username" type="text">
                     <label for="username" data-error="Not a valid username!">Username</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <input id="password" type="password" class="validate">
+                    <i class="material-icons prefix">vpn_key</i>
+                    <input id="password" type="password">
                     <label for="password" data-error="Incorrect password!">Password</label>
                 </div>
             </div>
-            <a class="center-align waves-effect waves-light btn-large">Login</a>
+            <a type="submit" name="action" onclick="submit()" class="center-align waves-effect waves-light btn-large">Login</a>
         </form>
     </div>
 </div>
+</div>
+<script>
+    var socket = io();
+    function submit(){
+        console.log('submit')
+        var pass = document.getElementById('password').value, user = document.getElementById('username').value;
+        socket.emit('attemptLogin', {name: user, 'pass': pass}, function (data){
+            if(data == 'nosuchuser'){
+                Materialize.toast('No such username!', 4000, 'red');
+            }
+            if(data == 'passfail'){
+                Materialize.toast('Password incorrect!', 4000, 'red');
+            }
+            if(data == 'success'){
+
+            }
+        });
+    }
+</script>
 </body>
 </html>

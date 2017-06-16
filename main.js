@@ -5,8 +5,11 @@ var server = require('http').createServer(app),
     io = require('socket.io').listen(server),
     session = expressSession({
         secret: "secret",
+        resave: true,
+        saveUninitialized: true,
         sessionID: "none"
-    });
+    }),
+    sharedsession = require('express-socket.io-session');
 
 var muzik = [],
     sockets = [],
@@ -48,8 +51,8 @@ console.log("Indexing user database...");
 fs.readdir(__dirname + '/users', (err, files) => {
     for(var i = 0; i < files.length; i++){
         var file = files[i];
-        var j = JSON.parse(fs.readFileSync(__dirname + "/users/" + file.name, 'utf8'));
-        users.push({"name": file.name.split(".")[0], "pass": j[0]['password'], 'sessionID': null});
+        var j = JSON.parse(fs.readFileSync(__dirname + "/users/" + file, 'utf8'));
+        users.push({"name": file.split(".")[0], "pass": j[0]['password'], 'sessionID': null});
     }
 });
 
@@ -100,19 +103,12 @@ console.log("Starting express.js...");
 app.use("/images", express.static(__dirname + '/images'));
 app.use(express.static('views'));
 app.use(session);
-app.configure(function () {
-    app.use(express.cookieParser());
-    app.use(express.session({store: sessionStore, secret: 'secretkey', key: 'express.sid'}));
-    app.use(function(req, res){
-        res.end('Your session id is ' + req.sessionID);
-    });
-});
 app.get('/', function (req, res) {
     res.sendFile(path.join(_dirname + "views/index.html"));
 });
 app.get('/admin', function (req, res) {
-    if(validateSession(req.sessionID) != null){
-        if(isAdmin(validateSession(req.sessionID))){
+    if(validateSession(req.session.sessionID) != null){
+        if(isAdmin(validateSession(req.session.sessionID))){
             res.sendFile(path.join(__dirname + "views/admin.html"));
         }
         else{
@@ -124,7 +120,7 @@ app.get('/admin', function (req, res) {
     }
 });
 app.get('/logout', function (req, res) {
-    var b = logoutUser(req.sessionID);
+    var b = logoutUser(req.session.sessionID);
     if(b){
         res.send("Logged out.");
     }
@@ -132,32 +128,45 @@ app.get('/logout', function (req, res) {
         res.send("You aren't logged in!");
     }
 });
+
+/*
+ * Socket.io config
+ */
+
+
 io.on('connection', function(socket){
 
-    var sessionid = socket.handshake.sessionID;
+    console.log(socket.handshake.session);
+    var sessionid = socket.handshake.session.userdata;
+    console.log(sessionid);
+    socket.handshake.session.userdata = 'HEH';
+    socket.handshake.session.save();
+    console.log(socket.handshake.session);
     var user = validateSession(sessionid);
 
     /*
      * Socket.io user stuff
      */
 
-    socket.on('isLoggedIn', function(){
+    socket.on('isLoggedIn', function(data, callback){
         if(user == null){
-            socket.emit('no');
+            callback('no');
         }
         else{
-            socket.emit('yes ' + v);
+            callback('yes ' + v);
         }
     });
-    socket.on('attemptLogin', function(data){
+    socket.on('attemptLogin', function(data, callback){
         var name = data.name, pass = data.pass;
         var login = loginUser(name, pass, sessionid);
-        socket.emit(login.toLowerCase());
+        callback(login.toLowerCase());
+        user = validateSession(sessionid);
+        console.log(sessionid);
     });
     /*
      * Socket.io Playlist Modification
      */
-    socket.on('songmod add', function(data){
+    socket.on('songmod add', function(data, callback){
 
     });
     console.log('New socket.io connection from ' + socket.id);
@@ -167,9 +176,7 @@ io.on('connection', function(socket){
 io.on('disconnect', function(socket){
     delete sockets[socket.id];
 });
-io.use(function(socket, next) {
-    session(socket.request, socket.request.res, next);
-});
+io.use(sharedsession(session, {autoSave: true}));
 server.listen(80, function () {
     console.log('Listening on port 80!')
 });
@@ -195,7 +202,7 @@ function createList(socket){
                 if (err) throw err;
                 socket.emit('cur', data.position);
                 socket.emit('data', metadata);
-                socket.emit('pic', metadata.picture.data);
+                socket.emit('pic', metadata.picture[0].data);
                 fudge(muzik[++i]);
             });
         }
