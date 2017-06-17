@@ -66,6 +66,12 @@ function navBar(){
         }
         else{
             var name = data.split(" ")[1];
+            document.getElementById('account').innerHTML = `
+                <div class="modal-content">
+                <h4 class="center">Hello, ` + name + `</h4>
+                <a class="tooltipped waves-effect waves-light btn-large" data-position="bottom" data-delay="50" data-tooltip="Logout" href="logout"><i class="center medium material-icons">input</i></a>
+                </div>
+            `;
             document.getElementById('navi').innerHTML = `
                 <nav class="nav-extended blue-grey lighten-1">
                     <div class="nav-wrapper">
@@ -80,6 +86,7 @@ function navBar(){
                 </nav>
             </div>`;
             $('.tooltipped').tooltip({delay: 50});
+            $('.modal').modal();
         }
         $('#loading').fadeOut(300, function(){
             $('#navi').show();
