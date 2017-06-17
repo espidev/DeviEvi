@@ -57,8 +57,15 @@ function navBar(){
             document.getElementById('navi').innerHTML = `
                 <nav class="nav-extended blue-grey lighten-1">
                     <div class="nav-wrapper">
+                        <ul class="left hide-on-med-down">
+                            <li><i class="material-icons" style="right:200px">library_music</i></li>
+                        </ul>
                         <ul class="right hide-on-med-down">
-                            <li><a class="tooltipped waves-effect waves-light" data-position="bottom" data-delay="50" data-tooltip="Login" href="login.html"><i class="material-icons">input</i></a></li>
+                            <li>
+                            <a class="tooltipped waves-effect waves-light" data-position="bottom" data-delay="50" data-tooltip="Login" href="login.html">
+                            <i class="material-icons">input</i>
+                            </a>
+                            </li>
                         </ul>
                     </div>
                 </nav>`;
@@ -75,6 +82,9 @@ function navBar(){
             document.getElementById('navi').innerHTML = `
                 <nav class="nav-extended blue-grey lighten-1">
                     <div class="nav-wrapper">
+                        <ul class="left hide-on-med-down">
+                            <li><i class="material-icons" style="right:200px">library_music</i></li>
+                        </ul>
                         <ul class="right hide-on-med-down">
                             <li>
                                 <a class="tooltipped waves-effect waves-light" data-position="bottom" data-delay="50" data-tooltip="Account" href="#account">
@@ -84,13 +94,15 @@ function navBar(){
                         </ul>
                     </div>
                 </nav>
-            </div>`;
+            </div>
+            `;
             $('.tooltipped').tooltip({delay: 50});
             $('.modal').modal();
         }
         $('#loading').fadeOut(300, function(){
             $('#navi').show();
             $('#container').show();
+            $('#player').show();
             document.getElementById('dump').innerHTML = "";
         });
     });
@@ -113,7 +125,7 @@ function loginSubmit(){
             Materialize.toast('Login successful!', 4000, 'green');
             window.setTimeout(function(){
                 window.location.replace("index.html");
-            }, 2000);
+            }, 1400);
         }
     });
 }

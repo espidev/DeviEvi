@@ -46,7 +46,7 @@ fs.readdir(__dirname + '/users', (err, files) => {
     for(var i = 0; i < files.length; i++){
         var file = files[i];
         var j = JSON.parse(fs.readFileSync(__dirname + "/users/" + file, 'utf8'));
-        console.log({"name": file.split(".")[0], "pass": j[0]['password'], 'sessionID': null});
+        //console.log({"name": file.split(".")[0], "pass": j[0]['password'], 'sessionID': null});
         users.push({"name": file.split(".")[0], "pass": j[0]['password'], 'sessionID': null});
     }
 });
@@ -60,38 +60,37 @@ console.log("Scanning music database...");
 fs.readdir(__dirname.replace("\\", "/") + '/data', (err, files) => {
     for(var i = 0; i < files.length; i++){
         var file = files[i];
-        console.log(__dirname.replace("\\", "/") + "/data/" + file + " " + json[0][__dirname.replace("\\", "/") + "/data/" + file]);
-        console.log(json[0]); //COMMENTS DEBUG
         muzik.push({"position": json[0][__dirname.replace("\\", "/") + "/data/" + file], "file": "data/" + file});
     }
-});
 
-/*
- * Create picture cache for music.
- */
+    /*
+     * Create picture cache for music.
+     */
 
-console.log("Creating cache for album art...");
+    console.log("Creating cache for " + muzik.length + " album art...");
 
-for(var i = 0; i < muzik.length; i++){
-    var mm = require('musicmetadata');
-    var parser = mm(fs.createReadStream(muzik[i].file), function (err, metadata) {
-        if (err) throw err;
-        fs.writeFileSync(__dirname + "/images/" + i + "." + metadata.picture[0].format, new Buffer(metadata.picture[0].data));
-        var easyimg = require('easyimage');
-        var height = 0, width = 0;
-        easyimg.info(__dirname + "/images/" + i + "." + metadata.picture[0].format).then(function (file){
-            height = file.height;
-            width = file.width;
-            console.log(__dirname + "/images/" + i + "." + metadata.picture[0].format);
-            easyimg.crop({
-                src:__dirname + "/images/" + i + "." + metadata.picture[0].format,
-                dst:__dirname + "/images/" + i + "." + metadata.picture[0].format,
-                cropwidth:height,
-                x:0, y:0
+    for(var i = 0; i < muzik.length; i++){
+        var mm = require('musicmetadata');
+        console.log(muzik[i].file)
+        var parser = mm(fs.createReadStream(muzik[i].file), function (err, metadata) {
+            if (err) throw err;
+            fs.writeFileSync(__dirname + "/images/" + i + "." + metadata.picture[0].format, new Buffer(metadata.picture[0].data));
+            var easyimg = require('easyimage');
+            var height = 0, width = 0;
+            easyimg.info(__dirname + "/images/" + i + "." + metadata.picture[0].format).then(function (file){
+                height = file.height;
+                width = file.width;
+                console.log(__dirname + "/images/" + i + "." + metadata.picture[0].format);
+                easyimg.crop({
+                    src:__dirname + "/images/" + i + "." + metadata.picture[0].format,
+                    dst:__dirname + "/images/" + i + "." + metadata.picture[0].format,
+                    cropwidth:height,
+                    x:0, y:0
+                });
             });
         });
-    });
-}
+    }
+});
 
 console.log("Starting express.js...");
 
@@ -119,10 +118,10 @@ app.get('/admin.html', function (req, res) {
 app.get('/logout', function (req, res) {
     var b = logoutUser(req.cookies.sessionID);
     if(b){
-        res.send("Logged out. <script> window.setTimeout(function(){window.location.replace('index.html');}, 2000); </script>");
+        res.send("Logged out. <script> window.setTimeout(function(){window.location.replace('index.html');}, 1500); </script>");
     }
     else {
-        res.send("You aren't logged in! <script> window.setTimeout(function(){window.location.replace('index.html');}, 2000); </script>");
+        res.send("You aren't logged in! <script> window.setTimeout(function(){window.location.replace('index.html');}, 1500); </script>");
     }
 });
 
