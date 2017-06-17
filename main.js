@@ -1,5 +1,5 @@
 const express = require('express');
-const expressSession = require('express-session');
+const cookieParser = require('cookie-parser');
 const app = express();
 var server = require('http').createServer(app),
     io = require('socket.io').listen(server),
@@ -46,6 +46,7 @@ fs.readdir(__dirname + '/users', (err, files) => {
     for(var i = 0; i < files.length; i++){
         var file = files[i];
         var j = JSON.parse(fs.readFileSync(__dirname + "/users/" + file, 'utf8'));
+        console.log({"name": file.split(".")[0], "pass": j[0]['password'], 'sessionID': null});
         users.push({"name": file.split(".")[0], "pass": j[0]['password'], 'sessionID': null});
     }
 });
@@ -95,14 +96,16 @@ for(var i = 0; i < muzik.length; i++){
 console.log("Starting express.js...");
 
 app.use("/images", express.static(__dirname + '/images'));
+app.use("/fonts", express.static(__dirname + '/fonts'));
 app.use(express.static('views'));
+app.use(cookieParser());
 app.get('/', function (req, res) {
     req.session.views = (req.session.views || 0) + 1;
     res.sendFile(path.join(_dirname + "views/index.html"));
 });
-app.get('/admin', function (req, res) {
-    if(validateSession(req.session.sessionID) != null){
-        if(isAdmin(validateSession(req.session.sessionID))){
+app.get('/admin.html', function (req, res) {
+    if(validateSession(req.cookies.sessionID) != null){
+        if(isAdmin(validateSession(req.cookies.sessionID))){
             res.sendFile(path.join(__dirname + "views/admin.html"));
         }
         else{
@@ -114,12 +117,12 @@ app.get('/admin', function (req, res) {
     }
 });
 app.get('/logout', function (req, res) {
-    var b = logoutUser(req.session.sessionID);
+    var b = logoutUser(req.cookies.sessionID);
     if(b){
-        res.send("Logged out.");
+        res.send("Logged out. <script> window.setTimeout(function(){window.location.replace('index.html');}, 2000); </script>");
     }
     else {
-        res.send("You aren't logged in!");
+        res.send("You aren't logged in! <script> window.setTimeout(function(){window.location.replace('index.html');}, 2000); </script>");
     }
 });
 
@@ -135,15 +138,23 @@ io.on('connection', function(socket){
     var user = validateSession(sessionid);
 
     /*
+     * Requested data
+     */
+
+    socket.on('getSongList', function(data, callback){
+        createList(socket);
+    });
+
+    /*
      * Socket.io user stuff
      */
 
-    socket.on('isLoggedIn', function(data, callback){
+    socket.on('isLoggedIn', function(callback){
         if(user == null){
             callback('no');
         }
         else{
-            callback('yes ' + v);
+            callback('yes ' + user);
         }
     });
     socket.on('attemptLogin', function(data, callback){
@@ -151,7 +162,6 @@ io.on('connection', function(socket){
         var login = loginUser(name, pass, sessionid);
         callback(login.toLowerCase());
         user = validateSession(sessionid);
-        console.log(sessionid);
     });
     /*
      * Socket.io Playlist Modification
@@ -160,7 +170,6 @@ io.on('connection', function(socket){
 
     });
     console.log('New socket.io connection from ' + socket.id);
-    createList(socket);
     sockets[socket.id] = socket;
 });
 io.on('disconnect', function(socket){
@@ -203,41 +212,44 @@ function createList(socket){
  * User utility functions.
  */
 function validateSession(sessionKey){
-    users.forEach(function(user){
+    for(var i = 0; i < users.length; i++){
+        var user = users[i];
         if(user.sessionID == sessionKey){
             return user.name;
         }
-    });
+    }
     return null;
 }
 function loginUser(usern, pass, sessionID){
-    users.forEach(function(user){
-        if(user.name == usern){
-            if(user.pass == pass){
+    for(var i = 0; i < users.length; i++) {
+        var user = users[i];
+        if (user.name === usern) {
+            if (user.pass == pass) {
                 user.sessionID = sessionID;
                 return "Success";
             }
-            else{
+            else {
                 return "PassFail";
             }
         }
-    });
+    }
     return 'NoSuchUser';
 }
 function logoutUser(sessionID){
-    users.forEach(function(user){
+    for(var i = 0; i < users.length; i++){
+        var user = users[i];
         if(user.sessionID == sessionID){
             user.sessionID = null;
             return true;
         }
-    });
+    }
     return false;
 }
 function isAdmin(usern){
-    admins.forEach(function(user){
-        if(user.name == usern)
-            return true;
-    });
+    for(var i = 0; i < users.length; i++){
+        var user = users[i];
+        if(user.name == usern) return true;
+    }
     return false;
 }
 /*

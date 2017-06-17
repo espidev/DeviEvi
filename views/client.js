@@ -7,6 +7,10 @@ if(getCookie("sessionID") == ""){
     document.cookie = "sessionID=" + guid();
 }
 
+/*
+ * index.html
+ */
+
 socket.on('datastart', function(data) {
     document.getElementById("container").innerHTML = "Refreshing list...";
     meta = new Array(data);
@@ -16,7 +20,7 @@ socket.on('cur', function(data){
     colcache = data;
 });
 socket.on('data', function(data){
-   metadata[colcache] = data;
+    metadata[colcache] = data;
 });
 socket.on('done', function(data){
     document.getElementById("container").innerHTML = "<div class=\"col s12 m7\">";
@@ -43,8 +47,51 @@ socket.on('done', function(data){
                 `;
         c++;
     });
-    document.getElementById("container").innerHTML += "</div>"
+    document.getElementById("container").innerHTML += "</div>";
+    navBar();
 });
+
+function navBar(){
+    socket.emit('isLoggedIn', function(data){
+        if(data == 'no'){
+            document.getElementById('navi').innerHTML = `
+                <nav class="nav-extended blue-grey lighten-1">
+                    <div class="nav-wrapper">
+                        <ul class="right hide-on-med-down">
+                            <li><a class="tooltipped waves-effect waves-light" data-position="bottom" data-delay="50" data-tooltip="Login" href="login.html"><i class="material-icons">input</i></a></li>
+                        </ul>
+                    </div>
+                </nav>`;
+
+        }
+        else{
+            var name = data.split(" ")[1];
+            document.getElementById('navi').innerHTML = `
+                <nav class="nav-extended blue-grey lighten-1">
+                    <div class="nav-wrapper">
+                        <ul class="right hide-on-med-down">
+                            <li>
+                                <a class="tooltipped waves-effect waves-light" data-position="bottom" data-delay="50" data-tooltip="Account" href="#account">
+                                <i class="material-icons">perm_identity</i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>`;
+            $('.tooltipped').tooltip({delay: 50});
+        }
+        $('#loading').fadeOut(300, function(){
+            $('#navi').show();
+            $('#container').show();
+            document.getElementById('dump').innerHTML = "";
+        });
+    });
+}
+
+/*
+ * login.html
+ */
 
 function loginSubmit(){
     var pass = document.getElementById('password').value, user = document.getElementById('username').value;
@@ -56,10 +103,15 @@ function loginSubmit(){
             Materialize.toast('Password incorrect!', 4000, 'red');
         }
         if(data == 'success'){
-
+            Materialize.toast('Login successful!', 4000, 'green');
+            window.setTimeout(function(){
+                window.location.replace("index.html");
+            }, 2000);
         }
     });
 }
+
+
 
 /*
  * Helper functions.
