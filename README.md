@@ -1,2 +1,3 @@
 # DeviEvi
-The ultimate client for Devin's Everything.
+Architecture plans below.
+

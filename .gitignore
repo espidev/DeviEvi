@@ -1,2 +1,5 @@
-/.idea/
-/node_modules/
+/JProcess/.idea/
+/NServer/node_modules/
+/NServer/.idea/
+/NServer/OLD/node_modules/
+/NServer/OLD/.idea/

@@ -1,0 +1,42 @@
+{
+  "name": "devievi",
+  "version": "1.0.69",
+  "description": "Devin's Everything is good. ",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/espidev/DeviEvi.git"
+  },
+  "keywords": [
+    "nsfw",
+    "music"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/espidev/DeviEvi/issues"
+  },
+  "homepage": "https://github.com/espidev/DeviEvi#readme",
+  "dependencies": {
+    "connect": "^3.6.2",
+    "cookie": "^0.3.1",
+    "cookie-session": "^2.0.0-beta.2",
+    "easyimage": "^2.1.0",
+    "express": "^4.15.3",
+    "expressjs": "^1.0.1",
+    "materialize-css": "^0.98.2",
+    "musicmetadata": "^2.0.5",
+    "socket.io": "^2.0.2",
+    "socket.io.users": "^2.0.2",
+    "soundcloud": "^3.1.2",
+    "uuid": "^3.0.1",
+    "youtube-api": "^2.0.8"
+  },
+  "devDependencies": {
+    "typings": "^2.1.1"
+  }
+}

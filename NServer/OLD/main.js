@@ -8,7 +8,7 @@ var server = require('http').createServer(app),
 var muzik = [],
     sockets = [],
     users = [],
-    admins = [];
+    admins = []; 
 
 /*
  * Init fs.
@@ -71,7 +71,7 @@ fs.readdir(__dirname.replace("\\", "/") + '/data', (err, files) => {
 
     for(var i = 0; i < muzik.length; i++){
         var mm = require('musicmetadata');
-        console.log(muzik[i].file)
+        console.log(muzik[i].file);
         var parser = mm(fs.createReadStream(muzik[i].file), function (err, metadata) {
             if (err) throw err;
             fs.writeFileSync(__dirname + "/images/" + i + "." + metadata.picture[0].format, new Buffer(metadata.picture[0].data));
