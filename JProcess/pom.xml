@@ -18,6 +18,11 @@
             <artifactId>kotlin-stdlib</artifactId>
             <version>${kotlin.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongo-java-driver</artifactId>
+            <version>3.5.0</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -49,7 +54,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>${main.class}</mainClass>
+                            <mainClass>net.espidev.devievi.DeviEviKt</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
