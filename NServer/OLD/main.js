@@ -8,7 +8,7 @@ var server = require('http').createServer(app),
 var muzik = [],
     sockets = [],
     users = [],
-    admins = []; 
+    admins = [];
 
 /*
  * Init fs.

@@ -15,6 +15,8 @@ fun println(output: String){
 
 fun main(args: Array<String>){
     System.out.println("Starting DeviEvi v${DeviEvi.version}...")
+}
 
+fun createTrack(){
 
 }
