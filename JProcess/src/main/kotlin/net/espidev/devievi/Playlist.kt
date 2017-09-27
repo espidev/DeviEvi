@@ -2,7 +2,7 @@ package net.espidev.devievi
 
 import java.util.*
 
-class Playlist constructor(name: String){
+class Playlist constructor(name: String, type: PlaylistType){
     private var list = ArrayList<UUID>()
     fun addTrack(track: UUID){
         list.add(track)
