@@ -10,14 +10,22 @@ import net.espidev.devievi.storage.StorageType
 import java.util.*
 
 object DeviEvi {
-    val version = "1.0.0"
+    val version = "v1.0.0"
 
     var debug = false
     var tracks = ArrayList<Track>()
 
-    var storageType = StorageType.LOCAL
-
     lateinit var socketServer: SocketServer
+
+    fun getStorageType(): StorageType? {
+        val type = Settings.getVal("STORAGE_TYPE")
+        for(storageType in StorageType.values()) {
+            if(storageType.name == type) {
+                return storageType
+            }
+        }
+        return null
+    }
 
     /*
      * Track API related functions.
