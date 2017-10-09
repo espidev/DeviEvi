@@ -36,7 +36,7 @@ object DeviEvi{
             println(output)
         }
     }
-}rergsfd
+}
 
 
 fun println(output: String){
