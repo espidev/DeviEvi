@@ -1,8 +1,13 @@
 package net.espidev.devievi
 
+import jdk.internal.jline.console.ConsoleReader
+import jdk.internal.jline.console.CursorBuffer
+import net.espidev.devievi.commands.HelpCommand
+import net.espidev.devievi.commands.StopCommand
+import net.espidev.devievi.commands.VersionCommand
 import java.util.*
 
-object DeviEvi{
+object DeviEvi {
     val version = "1.0.0"
 
     var debug = false
@@ -12,7 +17,7 @@ object DeviEvi{
      * Track API related functions.
      */
 
-    fun getTrackByUUID(uuid: UUID): UUID?{
+    fun getTrackByUUID(uuid: UUID): UUID? {
         for(track in tracks){
             if(track.id == uuid){
                 return track.id
@@ -20,16 +25,22 @@ object DeviEvi{
         }
         return null
     }
-    fun addTrack(){
+    fun addTrack() {
 
+    }
+
+    fun stopInstance() {
+        System.exit(0);
     }
 
     /*
      * Utility Functions
      */
 
-    fun println(output: String){
+    fun println(output: String) {
+        stashLine()
         System.out.println(output);
+        unstashLine()
     }
     fun debug(output: String) {
         if(debug) {
@@ -38,18 +49,26 @@ object DeviEvi{
     }
 }
 
+var console: ConsoleReader = ConsoleReader()
+private var stashed: CursorBuffer? = null
 
-fun println(output: String){
-    DeviEvi.println(output);
+val commands = ArrayList<ConsoleCommand>()
+
+fun initCommands() {
+    commands.add(HelpCommand())
+    commands.add(StopCommand())
+    commands.add(VersionCommand())
 }
 
-fun main(args: Array<String>){
+fun main(args: Array<String>) {
     System.out.println("Starting DeviEvi v${DeviEvi.version}...")
+
     System.out.println("Starting command process...")
+    initCommands()
     Thread({ startCommandProcess()}).start();
 }
 
-fun startCommandProcess(){
+fun startCommandProcess() {
     var prompt = true
     while (true) {
         if(prompt){
@@ -63,11 +82,34 @@ fun startCommandProcess(){
             processCommand(input)
             prompt = true
         }
-        else{agsdgsad
+        else{
             prompt = false
         }
         Thread.sleep(500)
     }
+}
+
+fun processCommand(input: String) {
+    val inputParsed = input.split(" ")
+    var foundValue = false
+    for (cc in commands) {
+        if (cc.cName.toLowerCase() == inputParsed[0]) {
+            val args = ArrayList<String>()
+            var i = 0
+            while (i < inputParsed.size) {
+                if (i != 0) args.add(inputParsed[i])
+                i++
+            }
+            cc.run(args)
+            foundValue = true
+            break
+        }
+    }
+    if (!foundValue) println("Do /help for help!")
+}
+
+fun println(output: String) {
+    DeviEvi.println(output);
 }
 
 fun stashLine() {
