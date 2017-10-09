@@ -5,6 +5,8 @@ import jdk.internal.jline.console.CursorBuffer
 import net.espidev.devievi.commands.HelpCommand
 import net.espidev.devievi.commands.StopCommand
 import net.espidev.devievi.commands.VersionCommand
+import net.espidev.devievi.network.SocketServer
+import net.espidev.devievi.storage.StorageType
 import java.util.*
 
 object DeviEvi {
@@ -12,6 +14,10 @@ object DeviEvi {
 
     var debug = false
     var tracks = ArrayList<Track>()
+
+    var storageType = StorageType.LOCAL
+
+    lateinit var socketServer: SocketServer
 
     /*
      * Track API related functions.
@@ -63,9 +69,15 @@ fun initCommands() {
 fun main(args: Array<String>) {
     System.out.println("Starting DeviEvi v${DeviEvi.version}...")
 
+    System.out.println("Checking preferences...")
+    Settings.setup()
+
     System.out.println("Starting command process...")
     initCommands()
-    Thread({ startCommandProcess()}).start();
+    Thread({ startCommandProcess()}).start()
+
+    println("Starting WebSocket server...")
+    Thread({ startSocketServer() }).start()
 }
 
 fun startCommandProcess() {
@@ -106,6 +118,10 @@ fun processCommand(input: String) {
         }
     }
     if (!foundValue) println("Do /help for help!")
+}
+
+fun startSocketServer() {
+    DeviEvi.socketServer = SocketServer(80)
 }
 
 fun println(output: String) {
