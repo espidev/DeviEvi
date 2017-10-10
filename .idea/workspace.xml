@@ -2,7 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="66b80cad-f417-4ab8-94d3-ad9501046b0f" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/accounts/Accounts.kt" afterPath="$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/accounts/Accounts.kt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/accounts/Role.kt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/DeviEvi.kt" afterPath="$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/DeviEvi.kt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/Settings.kt" afterPath="$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/Settings.kt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/storage/StorageAbstraction.kt" afterPath="$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/storage/StorageAbstraction.kt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/storage/StorageMethod.kt" afterPath="$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/storage/StorageMethod.kt" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -15,23 +20,25 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pom.xml">
+      <file leaf-file-name="DeviEvi.kt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/DeviEvi.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="519">
-              <caret line="39" column="21" lean-forward="false" selection-start-line="39" selection-start-column="21" selection-end-line="39" selection-end-column="21" />
-              <folding />
+            <state relative-caret-position="255">
+              <caret line="17" column="43" lean-forward="false" selection-start-line="17" selection-start-column="43" selection-end-line="17" selection-end-column="43" />
+              <folding>
+                <element signature="e#29#384#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DeviEvi.kt" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/DeviEvi.kt">
+      <file leaf-file-name="SocketServer.kt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/network/SocketServer.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="21" column="48" lean-forward="false" selection-start-line="21" selection-start-column="48" selection-end-line="21" selection-end-column="48" />
+            <state relative-caret-position="285">
+              <caret line="19" column="5" lean-forward="true" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="5" />
               <folding>
-                <element signature="e#29#384#0" expanded="true" />
+                <element signature="e#37#208#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -49,21 +56,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Settings.kt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/Settings.kt">
+      <file leaf-file-name="Track.kt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/Track.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="25" column="18" lean-forward="true" selection-start-line="25" selection-start-column="18" selection-end-line="25" selection-end-column="18" />
+            <state relative-caret-position="195">
+              <caret line="14" column="5" lean-forward="false" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="StorageAbstraction.kt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/storage/StorageAbstraction.kt">
+      <file leaf-file-name="Settings.kt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/Settings.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="14" column="0" lean-forward="true" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+            <state relative-caret-position="405">
+              <caret line="27" column="57" lean-forward="false" selection-start-line="27" selection-start-column="57" selection-end-line="27" selection-end-column="57" />
               <folding />
             </state>
           </provider>
@@ -72,9 +79,21 @@
       <file leaf-file-name="StorageMethod.kt" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/storage/StorageMethod.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="3" column="0" lean-forward="true" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+            <state relative-caret-position="75">
+              <caret line="5" column="1" lean-forward="true" selection-start-line="5" selection-start-column="1" selection-end-line="5" selection-end-column="1" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="StorageAbstraction.kt" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/storage/StorageAbstraction.kt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="330">
+              <caret line="22" column="27" lean-forward="true" selection-start-line="22" selection-start-column="27" selection-end-line="22" selection-end-column="27" />
+              <folding>
+                <element signature="e#37#107#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -89,34 +108,22 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Accounts.kt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/accounts/Accounts.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" column="1" lean-forward="true" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="User.kt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/accounts/User.kt">
+      <file leaf-file-name="PlaylistType.kt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/PlaylistType.kt">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="45">
-              <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+              <caret line="3" column="26" lean-forward="false" selection-start-line="3" selection-start-column="26" selection-end-line="3" selection-end-column="26" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SocketServer.kt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/network/SocketServer.kt">
+      <file leaf-file-name="Playlist.kt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/Playlist.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="19" column="5" lean-forward="true" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="5" />
-              <folding>
-                <element signature="e#37#208#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="75">
+              <caret line="5" column="27" lean-forward="false" selection-start-line="5" selection-start-column="27" selection-end-line="5" selection-end-column="27" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -126,9 +133,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Kotlin Class" />
         <option value="Kotlin Enum" />
         <option value="Kotlin File" />
+        <option value="Kotlin Class" />
       </list>
     </option>
   </component>
@@ -145,7 +152,6 @@
       <list>
         <option value="$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/Main.kt" />
         <option value="$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/PlaylistType.kt" />
-        <option value="$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/Track.kt" />
         <option value="$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/Playlist.kt" />
         <option value="$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/network/SocketIO.kt" />
         <option value="$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/ConsoleCommand.kt" />
@@ -155,14 +161,16 @@
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/network/SocketServer.kt" />
         <option value="$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/storage/StorageType.kt" />
-        <option value="$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/storage/StorageMethod.kt" />
-        <option value="$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/storage/StorageAbstraction.kt" />
         <option value="$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/storage/local/LocalStorageMethod.kt" />
-        <option value="$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/DeviEvi.kt" />
-        <option value="$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/Settings.kt" />
         <option value="$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/Accounts.kt" />
         <option value="$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/accounts/User.kt" />
         <option value="$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/accounts/Accounts.kt" />
+        <option value="$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/accounts/Role.kt" />
+        <option value="$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/Track.kt" />
+        <option value="$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/Settings.kt" />
+        <option value="$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/storage/StorageMethod.kt" />
+        <option value="$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/DeviEvi.kt" />
+        <option value="$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/storage/StorageAbstraction.kt" />
       </list>
     </option>
   </component>
@@ -423,12 +431,12 @@
       <workItem from="1507565797161" duration="23000" />
       <workItem from="1507567472166" duration="154000" />
       <workItem from="1507569537230" duration="1617000" />
-      <workItem from="1507572446744" duration="14392000" />
+      <workItem from="1507572446744" duration="18562000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="25813000" />
+    <option name="totallyTimeSpent" value="29983000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1920" height="1026" extended-state="6" />
@@ -473,14 +481,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/network/SparkIO.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="42">
-          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="504">
@@ -504,7 +504,7 @@
         <state relative-caret-position="168">
           <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
           <folding>
-            <element signature="e#29#74#0" expanded="true" />
+            <element signature="e#29#74#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -549,7 +549,7 @@
         <state relative-caret-position="168">
           <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
           <folding>
-            <element signature="e#29#74#0" expanded="true" />
+            <element signature="e#29#74#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -594,7 +594,7 @@
         <state relative-caret-position="168">
           <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
           <folding>
-            <element signature="e#29#74#0" expanded="true" />
+            <element signature="e#29#74#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -639,7 +639,7 @@
         <state relative-caret-position="168">
           <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
           <folding>
-            <element signature="e#29#74#0" expanded="true" />
+            <element signature="e#29#74#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -699,7 +699,7 @@
         <state relative-caret-position="147">
           <caret line="8" column="51" lean-forward="false" selection-start-line="8" selection-start-column="51" selection-end-line="8" selection-end-column="51" />
           <folding>
-            <element signature="e#29#74#0" expanded="true" />
+            <element signature="e#29#74#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -724,32 +724,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/Main.kt" />
     <entry file="file://$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/network/SocketIO.kt" />
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/PlaylistType.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="26" lean-forward="false" selection-start-line="3" selection-start-column="26" selection-end-line="3" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/Track.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="11" column="66" lean-forward="false" selection-start-line="11" selection-start-column="66" selection-end-line="11" selection-end-column="66" />
-          <folding>
-            <element signature="e#29#74#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/Playlist.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="27" lean-forward="false" selection-start-line="5" selection-start-column="27" selection-end-line="5" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/ConsoleCommand.kt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
@@ -763,7 +737,7 @@
         <state relative-caret-position="150">
           <caret line="10" column="39" lean-forward="false" selection-start-line="10" selection-start-column="39" selection-end-line="10" selection-end-column="39" />
           <folding>
-            <element signature="e#38#169#0" expanded="true" />
+            <element signature="e#38#169#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -773,7 +747,7 @@
         <state relative-caret-position="180">
           <caret line="12" column="29" lean-forward="false" selection-start-line="12" selection-start-column="29" selection-end-line="12" selection-end-column="29" />
           <folding>
-            <element signature="e#38#141#0" expanded="true" />
+            <element signature="e#38#141#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -783,7 +757,7 @@
         <state relative-caret-position="240">
           <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
           <folding>
-            <element signature="e#38#141#0" expanded="true" />
+            <element signature="e#38#141#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -804,18 +778,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/storage/StorageType.kt">
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/accounts/User.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="25" lean-forward="true" selection-start-line="3" selection-start-column="25" selection-end-line="3" selection-end-column="25" />
+        <state relative-caret-position="60">
+          <caret line="4" column="1" lean-forward="true" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="1" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/storage/StorageMethod.kt">
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/accounts/Accounts.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="29" lean-forward="true" selection-start-line="8" selection-start-column="29" selection-end-line="8" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/accounts/Role.kt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
-          <caret line="3" column="0" lean-forward="true" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/PlaylistType.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="26" lean-forward="false" selection-start-line="3" selection-start-column="26" selection-end-line="3" selection-end-column="26" />
           <folding />
         </state>
       </provider>
@@ -830,10 +820,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/storage/StorageAbstraction.kt">
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/Settings.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="0" lean-forward="true" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+        <state relative-caret-position="405">
+          <caret line="27" column="57" lean-forward="false" selection-start-line="27" selection-start-column="57" selection-end-line="27" selection-end-column="57" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/storage/StorageType.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="25" lean-forward="true" selection-start-line="3" selection-start-column="25" selection-end-line="3" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/Track.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="14" column="5" lean-forward="false" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
           <folding />
         </state>
       </provider>
@@ -848,36 +854,38 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/Settings.kt">
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/storage/StorageMethod.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="25" column="18" lean-forward="true" selection-start-line="25" selection-start-column="18" selection-end-line="25" selection-end-column="18" />
+        <state relative-caret-position="75">
+          <caret line="5" column="1" lean-forward="true" selection-start-line="5" selection-start-column="1" selection-end-line="5" selection-end-column="1" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/accounts/User.kt">
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/Playlist.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/accounts/Accounts.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="1" lean-forward="true" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
+        <state relative-caret-position="75">
+          <caret line="5" column="27" lean-forward="false" selection-start-line="5" selection-start-column="27" selection-end-line="5" selection-end-column="27" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/DeviEvi.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="21" column="48" lean-forward="false" selection-start-line="21" selection-start-column="48" selection-end-line="21" selection-end-column="48" />
+        <state relative-caret-position="255">
+          <caret line="17" column="43" lean-forward="false" selection-start-line="17" selection-start-column="43" selection-end-line="17" selection-end-column="43" />
           <folding>
             <element signature="e#29#384#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/net/espidev/devievi/storage/StorageAbstraction.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="22" column="27" lean-forward="true" selection-start-line="22" selection-start-column="27" selection-end-line="22" selection-end-column="27" />
+          <folding>
+            <element signature="e#37#107#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -1,5 +1,6 @@
 package net.espidev.devievi.storage
 
-open class StorageMethod (storageType: StorageType) {
-
+abstract class StorageMethod (storageType: StorageType) {
+    val storageType = storageType
+    abstract fun setupConfig(); //Code that is executed when the configuration is being setup.
 }

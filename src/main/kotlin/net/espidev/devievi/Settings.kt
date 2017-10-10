@@ -11,10 +11,22 @@ object Settings {
     private val mthr = Thread({firstSetup()})
 
     private var lock = false
+
     init {
+
+        /*
+         * General settings
+         */
+
         preflist.put("PORT", "1305")
         preflist.put("STORAGE_TYPE", "LOCAL")
         preflist.put("FIRST_SETUP", "false")
+
+        setupPrefs.add(Runnable({
+            println("Port that server runs on (Default: ${preflist["PORT"]}): ")
+            preflist.put("PORT", console.readLine())
+            println("Storage type the server should use: ")
+        }))
     }
 
     fun setup() {

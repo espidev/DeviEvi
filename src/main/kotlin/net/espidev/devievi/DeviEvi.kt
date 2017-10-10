@@ -17,16 +17,6 @@ object DeviEvi {
 
     lateinit var socketServer: SocketServer
 
-    fun getStorageType(): StorageType? {
-        val type = Settings.getVal("STORAGE_TYPE")
-        for(storageType in StorageType.values()) {
-            if(storageType.name == type) {
-                return storageType
-            }
-        }
-        return null
-    }
-
     /*
      * Track API related functions.
      */
