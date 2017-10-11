@@ -62,7 +62,7 @@ object Settings {
         setVal("FIRST_SETUP", "true")
     }
     fun getVal(key: String): String {
-        return prefs.get(key, preflist[key])
+        return prefs.get(key, null)
     }
     fun setVal(key: String, value: String) {
         preflist[key] = value

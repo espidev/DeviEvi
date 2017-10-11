@@ -2,8 +2,8 @@ package net.espidev.devievi.commands
 
 import net.espidev.devievi.ConsoleCommand
 import net.espidev.devievi.DeviEvi
-import net.espidev.devievi.commands
-import java.util.ArrayList
+import net.espidev.devievi.Settings
+import java.util.*
 
 class SettingsCommand : ConsoleCommand() {
     init {
@@ -18,12 +18,44 @@ class SettingsCommand : ConsoleCommand() {
             if(args[0].toLowerCase() == "help") {
                 help()
             }
-            else if(args[1].toLowerCase() == "") {
-
+            else if(args[0].toLowerCase() == "list") {
+                DeviEvi.println("-----Settings List-----")
+                for(he in Settings.preflist) {
+                    DeviEvi.println("${he.key} : ${Settings.getVal(he.key)}")
+                }
+            }
+            else {
+                help()
+            }
+        }
+        else if(args.size == 2) {
+            if(args[0].toLowerCase() == "get") {
+                val v = Settings.getVal(args[1])
+                if(v == null) {
+                    DeviEvi.println("Key ${args[1]} not found.")
+                }
+                else {
+                    DeviEvi.println("${args[1]} : ${v}")
+                }
+            }
+            else {
+                help()
+            }
+        }
+        else if(args.size == 3) {
+            if(args[0].toLowerCase() == "set") {
+                val v = Settings.getVal(args[1])
+                if(v == null) {
+                    DeviEvi.println("Key ${args[1]} not found.")
+                }
+                else {
+                    Settings.setVal(args[1], args[2])
+                    DeviEvi.println("Key successfully set")
+                }
             }
         }
         else {
-
+            help()
         }
     }
     private fun help() {

@@ -3,6 +3,7 @@ package net.espidev.devievi
 import jdk.internal.jline.console.ConsoleReader
 import jdk.internal.jline.console.CursorBuffer
 import net.espidev.devievi.commands.HelpCommand
+import net.espidev.devievi.commands.SettingsCommand
 import net.espidev.devievi.commands.StopCommand
 import net.espidev.devievi.commands.VersionCommand
 import net.espidev.devievi.network.SocketServer
@@ -62,6 +63,7 @@ fun initCommands() {
     commands.add(HelpCommand())
     commands.add(StopCommand())
     commands.add(VersionCommand())
+    commands.add(SettingsCommand())
 }
 
 fun main(args: Array<String>) {
