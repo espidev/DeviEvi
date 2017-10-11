@@ -25,7 +25,9 @@ object Settings {
         setupPrefs.add(Runnable({
             println("Port that server runs on (Default: ${preflist["PORT"]}): ")
             preflist.put("PORT", console.readLine())
-            println("Storage type the server should use: ")
+            println("Storage type the server should use (Default: ${preflist["STORAGE_TYPE"]}): ")
+            preflist.put("STORAGE_TYPE", console.readLine())
+
         }))
     }
 
