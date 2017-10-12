@@ -1,5 +1,7 @@
 package net.espidev.devievi.accounts
 
-class User {
+import java.util.*
+
+class User (var name: String, var uuid: UUID, var role: Role) {
 
 }

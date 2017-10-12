@@ -2,10 +2,16 @@ package net.espidev.devievi.storage
 
 import net.espidev.devievi.DeviEvi
 import net.espidev.devievi.Settings
+import net.espidev.devievi.storage.local.SqliteStorageMethod
+import java.util.*
 
 object StorageAbstraction {
 
     val storageMethods = ArrayList<StorageMethod>()
+
+    init {
+        storageMethods.add(SqliteStorageMethod())
+    }
 
     fun getStorageType(): StorageType? {
         val type = Settings.getVal("STORAGE_TYPE")
@@ -37,4 +43,7 @@ object StorageAbstraction {
         return null
     }
 
+    fun obtainTrackStream(uuid: UUID) {
+
+    }
 }

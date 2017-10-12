@@ -1,5 +1,6 @@
 package net.espidev.devievi
 
+import net.espidev.devievi.storage.StorageAbstraction
 import java.util.prefs.Preferences
 
 object Settings {
@@ -19,14 +20,39 @@ object Settings {
          */
 
         preflist.put("PORT", "1305")
-        preflist.put("STORAGE_TYPE", "LOCAL")
+        preflist.put("STORAGE_TYPE", "SQLITE")
         preflist.put("FIRST_SETUP", "false")
 
         setupPrefs.add(Runnable({
-            println("Port that server runs on (Default: ${preflist["PORT"]}): ")
-            preflist.put("PORT", console.readLine())
-            println("Storage type the server should use (Default: ${preflist["STORAGE_TYPE"]}): ")
-            preflist.put("STORAGE_TYPE", console.readLine())
+            while (true) { //PORT settings validataion
+                println("Port that server runs on (Default: ${preflist["PORT"]}): ")
+                var v = console.readLine()
+                try {
+                    if(Integer.parseInt(v) > 65535 || Integer.parseInt(v) < 0) {
+                        throw Exception()
+                    }
+                    preflist.put("PORT", v)
+                    break
+                }
+                catch(e: Exception) {
+                    println("Incorrect port number. Please try again.")
+                }
+            }
+            while (true) { //STORAGE_TYPE settings validataion
+                println("Storage type the server should use (Default: ${preflist["STORAGE_TYPE"]}): ")
+                preflist.put("STORAGE_TYPE", console.readLine().toUpperCase())
+                var b = false
+                for(c in StorageAbstraction.storageMethods) {
+                    if(c.storageType.name == preflist["STORAGE_TYPE"]) {
+                        b = !b
+                        break
+                    }
+                }
+                if(b) {
+                    break
+                }
+                println("Incorrect storage type! Try again.")
+            }
 
         }))
     }

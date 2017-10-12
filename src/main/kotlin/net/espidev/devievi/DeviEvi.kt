@@ -1,13 +1,12 @@
 package net.espidev.devievi
 
-import jdk.internal.jline.console.ConsoleReader
-import jdk.internal.jline.console.CursorBuffer
+import jline.console.ConsoleReader
+import jline.console.CursorBuffer
 import net.espidev.devievi.commands.HelpCommand
 import net.espidev.devievi.commands.SettingsCommand
 import net.espidev.devievi.commands.StopCommand
 import net.espidev.devievi.commands.VersionCommand
 import net.espidev.devievi.network.SocketServer
-import net.espidev.devievi.storage.StorageType
 import java.util.*
 
 object DeviEvi {
@@ -70,14 +69,14 @@ fun main(args: Array<String>) {
     System.out.println("Starting DeviEvi v${DeviEvi.version}...")
 
     System.out.println("Checking preferences...")
-    Settings.setup()
+    Settings.setup() //lock main thread for preferences
+
+    println("Starting WebSocket server...")
+    Thread({ startSocketServer() }).start()
 
     System.out.println("Starting command process...")
     initCommands()
     Thread({ startCommandProcess()}).start()
-
-    println("Starting WebSocket server...")
-    Thread({ startSocketServer() }).start()
 }
 
 fun startCommandProcess() {

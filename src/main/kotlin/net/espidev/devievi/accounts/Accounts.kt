@@ -8,4 +8,12 @@ object Accounts {
     fun getUserFromUUID(uuid: UUID): User? {
         return userBase[uuid]
     }
+    fun userHasPerm(uuid: UUID, perm: String): Boolean? {
+        try{
+            return getUserFromUUID(uuid)!!.role.permissions.contains(perm)
+        }
+        catch (e: Exception) {
+            return null
+        }
+    }
 }
