@@ -42,6 +42,9 @@ object StorageAbstraction {
         }
         return null
     }
+    fun addCurrentStorageMethodToConfig() {
+        Settings.setupPrefs.add(Runnable( {getCurrentStorageMethod()!!.setupConfig()} ))
+    }
 
     fun obtainTrackStream(uuid: UUID) {
 

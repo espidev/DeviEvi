@@ -32,6 +32,7 @@ object Settings {
                         throw Exception()
                     }
                     preflist.put("PORT", v)
+                    setVal("PORT", v)
                     break
                 }
                 catch(e: Exception) {
@@ -49,6 +50,8 @@ object Settings {
                     }
                 }
                 if(b) {
+                    setVal("STORAGE_TYPE", preflist["STORAGE_TYPE"]!!)
+                    StorageAbstraction.addCurrentStorageMethodToConfig()
                     break
                 }
                 println("Incorrect storage type! Try again.")
