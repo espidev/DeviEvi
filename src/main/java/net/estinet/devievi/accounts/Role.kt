@@ -1,4 +1,4 @@
-package net.espidev.devievi.accounts
+package net.estinet.devievi.accounts
 
 class Role (var name: String) {
     var permissions = ArrayList<String>()

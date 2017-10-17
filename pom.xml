@@ -73,7 +73,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>net.espidev.devievi.DeviEviKt</mainClass>
+                            <mainClass>espidev.devievi.DeviEviKt</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

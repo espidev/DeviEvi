@@ -1,11 +1,9 @@
-package net.espidev.devievi
+package net.estinet.devievi
 
 import java.io.InputStream
 import java.util.*
 
-class Track (name: String, id: UUID){
-    val name = name
-    val id = id
+class Track (val name: String, val id: UUID){
     constructor(name: String, id: UUID, stream: InputStream) : this(name, id){
 
     }

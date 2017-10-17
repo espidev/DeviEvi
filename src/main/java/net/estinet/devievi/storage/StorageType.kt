@@ -1,4 +1,4 @@
-package net.espidev.devievi.storage
+package net.estinet.devievi.storage
 
 enum class StorageType {
     SQLITE, MYSQL, MONGODB

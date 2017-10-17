@@ -1,8 +1,8 @@
-package net.espidev.devievi.commands
+package net.estinet.devievi.commands
 
-import net.espidev.devievi.ConsoleCommand
-import net.espidev.devievi.DeviEvi
-import net.espidev.devievi.commands
+import net.estinet.devievi.ConsoleCommand
+import net.estinet.devievi.DeviEvi
+import net.estinet.devievi.commands
 import java.util.*
 
 class HelpCommand : ConsoleCommand() {

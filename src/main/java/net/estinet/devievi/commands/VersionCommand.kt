@@ -1,7 +1,7 @@
-package net.espidev.devievi.commands
+package net.estinet.devievi.commands
 
-import net.espidev.devievi.ConsoleCommand
-import net.espidev.devievi.DeviEvi
+import net.estinet.devievi.ConsoleCommand
+import net.estinet.devievi.DeviEvi
 import java.util.ArrayList
 
 class VersionCommand : ConsoleCommand(){

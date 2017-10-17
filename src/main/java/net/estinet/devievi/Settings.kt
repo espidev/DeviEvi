@@ -1,6 +1,6 @@
-package net.espidev.devievi
+package net.estinet.devievi
 
-import net.espidev.devievi.storage.StorageAbstraction
+import net.estinet.devievi.storage.StorageAbstraction
 import java.util.prefs.Preferences
 
 object Settings {
@@ -9,7 +9,7 @@ object Settings {
     val setupPrefs = ArrayList<Runnable>()
     val preflist = HashMap<String, String>()
 
-    private val mthr = Thread({firstSetup()})
+    private val mthr = Thread({ firstSetup() })
 
     private var lock = false
 
@@ -28,6 +28,7 @@ object Settings {
                 println("Port that server runs on (Default: ${preflist["PORT"]}): ")
                 var v = console.readLine()
                 try {
+                    if(v == "") v = preflist["PORT"]
                     if(Integer.parseInt(v) > 65535 || Integer.parseInt(v) < 0) {
                         throw Exception()
                     }
@@ -38,12 +39,15 @@ object Settings {
                     println("Incorrect port number. Please try again.")
                 }
             }
-            while (true) { //STORAGE_TYPE settings validataion
+            while (true) { //STORAGE_TYPE settings validation
                 println("Storage type the server should use (Default: ${preflist["STORAGE_TYPE"]}): ")
-                preflist.put("STORAGE_TYPE", console.readLine().toUpperCase())
+                var v: String? = console.readLine().toUpperCase();
+                if(v == "") v = preflist["STORAGE_TYPE"]
+                preflist.put("STORAGE_TYPE", v!!)
                 var b = false
                 for(c in StorageAbstraction.storageMethods) {
                     if(c.storageType.name == preflist["STORAGE_TYPE"]) {
+                        StorageAbstraction.setStorageType(c.storageType)
                         b = !b
                         break
                     }
@@ -54,6 +58,9 @@ object Settings {
                 println("Incorrect storage type! Try again.")
             }
 
+        }))
+        setupPrefs.add(Runnable({
+            StorageAbstraction.getCurrentStorageMethod()!!.setupConfig()
         }))
     }
 
@@ -78,6 +85,7 @@ object Settings {
                 }
                 catch (e: Exception) {}
                 lock = false
+                println("Completed initial setup!")
             })
             lock = true
             while(lock) Thread.sleep(1000) //locks the main thread until the first setup is complete

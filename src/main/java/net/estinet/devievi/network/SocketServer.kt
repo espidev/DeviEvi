@@ -1,6 +1,6 @@
-package net.espidev.devievi.network
+package net.estinet.devievi.network
 
-import net.espidev.devievi.DeviEvi
+import net.estinet.devievi.DeviEvi
 import org.java_websocket.WebSocket
 import org.java_websocket.handshake.ClientHandshake
 import org.java_websocket.server.WebSocketServer

@@ -1,12 +1,13 @@
-package net.espidev.devievi
+package net.estinet.devievi
 
 import jline.console.ConsoleReader
 import jline.console.CursorBuffer
-import net.espidev.devievi.commands.HelpCommand
-import net.espidev.devievi.commands.SettingsCommand
-import net.espidev.devievi.commands.StopCommand
-import net.espidev.devievi.commands.VersionCommand
-import net.espidev.devievi.network.SocketServer
+import net.estinet.devievi.commands.HelpCommand
+import net.estinet.devievi.commands.SettingsCommand
+import net.estinet.devievi.commands.StopCommand
+import net.estinet.devievi.commands.VersionCommand
+import net.estinet.devievi.network.SocketServer
+import net.estinet.devievi.storage.StorageAbstraction
 import java.util.*
 
 object DeviEvi {
@@ -66,17 +67,26 @@ fun initCommands() {
 }
 
 fun main(args: Array<String>) {
-    System.out.println("Starting DeviEvi v${DeviEvi.version}...")
+    try {
+        System.out.println("Starting DeviEvi v${DeviEvi.version}...")
 
-    System.out.println("Checking preferences...")
-    Settings.setup() //lock main thread for preferences
+        System.out.println("Checking preferences...")
+        Settings.setup() //lock main thread for preferences
 
-    println("Starting WebSocket server...")
-    Thread({ startSocketServer() }).start()
+        println("Initializing storage type: ${StorageAbstraction.getStorageType().toString()}")
+        StorageAbstraction.initializeStorageMethod()
 
-    System.out.println("Starting command process...")
-    initCommands()
-    Thread({ startCommandProcess()}).start()
+        println("Starting WebSocket server...")
+        Thread({ startSocketServer() }).start()
+
+        System.out.println("Starting command process...")
+        initCommands()
+        Thread({ startCommandProcess() }).start()
+    }
+    catch(e: Exception) {
+        println(e.message)
+        println("Welp, the program crashed. Check the above error for details.")
+    }
 }
 
 fun startCommandProcess() {
