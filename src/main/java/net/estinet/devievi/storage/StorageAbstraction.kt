@@ -52,6 +52,9 @@ object StorageAbstraction {
         }
         return null
     }
+    fun addCurrentStorageMethodToConfig() {
+        Settings.setupPrefs.add(Runnable( {getCurrentStorageMethod()!!.setupConfig()} ))
+    }
 
     fun initializeStorageMethod() {
         val s = getCurrentStorageMethod()
