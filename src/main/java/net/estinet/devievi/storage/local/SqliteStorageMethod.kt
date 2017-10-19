@@ -41,11 +41,11 @@ class SqliteStorageMethod: StorageMethod(storageType = StorageType.SQLITE) {
              * Initialization of tables.
              */
 
-            val initUsers = "CREATE TABLE IF NOT EXISTS users (uuid text PRIMARY KEY, username text, password text, rank text)"
-            val initRoles = "CREATE TABLE IF NOT EXISTS roles (name text, perms text, users text)"
-            val initTracks = "CREATE TABLE IF NOT EXISTS tracks (uuid text, track blob)"
-            val initPlaylists = "CREATE TABLE IF NOT EXISTS playlists (uuid text, tracks text)"
-            val initSettings = "CREATE TABLE IF NOT EXISTS settings (key text, value text)"
+            val initUsers = "CREATE TABLE IF NOT EXISTS users (uuid text PRIMARY KEY, username text, desc text, password text, rank text, other text)"
+            val initRoles = "CREATE TABLE IF NOT EXISTS roles (name text PRIMARY KEY, perms text, users text, other text)"
+            val initTracks = "CREATE TABLE IF NOT EXISTS tracks (uuid text PRIMARY KEY, track blob)"
+            val initPlaylists = "CREATE TABLE IF NOT EXISTS playlists (uuid text PRIMARY KEY, owneruuid text, name text, visibility text, desc text, tracks text, other text)"
+            val initSettings = "CREATE TABLE IF NOT EXISTS settings (key text PRIMARY KEY, value text)"
 
             try {
                 val st = conn!!.createStatement()
